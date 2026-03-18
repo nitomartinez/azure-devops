@@ -1,6 +1,6 @@
 ## Test
 
-This is a test repository to implement some basic integration between Azure and github pipelines using an example Java application
+This is a test repository to implement some basic integration between Azure and github actions using an example Java application
 
 ## Java Application
 
@@ -35,4 +35,6 @@ Create a CI pipeline that:
 - Run Karate tests (Integration tests) to the jacoco instance
 - stop the deployment and deploy in pre
 - Rerun karate tests in pre
+
+
 
