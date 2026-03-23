@@ -1,3 +1,40 @@
 
 TODO.md
 code/.vscode/settings.json
+# Maven
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# IntelliJ IDEA
+*.iml
+.idea/
+out/
+
+# VS Code
+.vscode/
+.vscode/settings.json
+
+# TODO
+TODO.md
+
+# OS generated
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Build
+/build/
+
+# Dependency directories
+node_modules/
+
+# Others
+*.swp
+*.swo
