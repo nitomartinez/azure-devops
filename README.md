@@ -1,6 +1,6 @@
-## Test
+## Training
 
-This is a test repository to implement some basic integration between Azure and github actions using an example Java application
+This is thre training repository to implement some basic integration between Azure and github actions using an example Java application
 
 ## Java Application
 
@@ -12,7 +12,7 @@ This is a test repository to implement some basic integration between Azure and 
 - One simple Karate test
 
 Java Version: 21
-Java AOT if possible (TBC reflection with REST
+Java AOT if possible (TBC reflection with OpenApi)
 
 ## Create basic Azure infra
 
@@ -35,6 +35,7 @@ Create a CI pipeline that:
 - Run Karate tests (Integration tests) to the jacoco instance
 - stop the deployment and deploy in pre
 - Rerun karate tests in pre
+
 
 
 
