@@ -11,7 +11,7 @@
   <parent>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-parent</artifactId>
-      <version>4.0.4</version>
+      <version>3.5.12</version>
       <relativePath/> 
   </parent>
 
@@ -24,7 +24,7 @@
     <java.version>21</java.version>
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>21</maven.compiler.target>
-    <spring-boot.version>3.2.5</spring-boot.version>
+    <spring-boot.version>4.0.4</spring-boot.version>
     <openapi-generator.version>7.4.0</openapi-generator.version>
     <springdoc.version>2.5.0</springdoc.version>
     <jackson-nullable.version>0.2.6</jackson-nullable.version>
@@ -71,7 +71,14 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>${spring-boot.version}</version>
+        <executions>
+          <execution>
+            <id>process-aot</id>
+            <goals>
+              <goal>process-aot</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -103,7 +110,6 @@
           </execution>
         </executions>
       </plugin>
-      <!-- AOIT plugin for GraalVM native-image (optional, user must configure JAVA_HOME) -->
     </plugins>
   </build>
 
@@ -115,15 +121,21 @@
           <plugin>
             <groupId>org.graalvm.buildtools</groupId>
             <artifactId>native-maven-plugin</artifactId>
-            <version>0.10.2</version>
+            <version>0.11.5</version> 
             <configuration>
               <mainClass>${main-class}</mainClass>
+              <classesDirectory>${project.build.outputDirectory}</classesDirectory>
+              <metadataRepository>
+                  <enabled>true</enabled>
+              </metadataRepository>
             </configuration>
             <executions>
               <execution>
+                <id>build-native</id>
                 <goals>
                   <goal>compile-no-fork</goal>
                 </goals>
+                <phase>package</phase>
               </execution>
             </executions>
           </plugin>
