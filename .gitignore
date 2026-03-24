@@ -39,5 +39,7 @@ node_modules/
 # Others
 *.swp
 *.swo
+*~
+# Environment variables
 .env.local
 .act.event.json
