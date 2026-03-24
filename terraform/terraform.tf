@@ -1,0 +1,15 @@
+# Configure the Azure provider
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 4.65.0"
+    }
+  }
+
+  required_version = ">= 1.14.7"
+}
+
+provider "azurerm" {
+  features {}
+}

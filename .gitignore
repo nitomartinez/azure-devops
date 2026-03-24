@@ -4,6 +4,7 @@ code/.vscode/settings.json
 # Maven
 target/
 !.mvn/wrapper/maven-wrapper.jar
+*.jar
 
 # Eclipse
 .classpath
