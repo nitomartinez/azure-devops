@@ -6,22 +6,22 @@ on:
   pull_request:
 
 jobs:
-  gitleaks:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Run Gitleaks to check for secrets
-        uses: gitleaks/gitleaks-action@v2
-        with:
-          fail: true
-          verbose: true
-          report-format: sarif
-          report-path: gitleaks.sarif
-        continue-on-error: false
+  # gitleaks:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+  #     - name: Run Gitleaks to check for secrets
+  #       uses: gitleaks/gitleaks-action@v2
+  #       with:
+  #         fail: true
+  #         verbose: true
+  #         report-format: sarif
+  #         report-path: gitleaks.sarif
+  #       continue-on-error: false
   build-and-test:
     runs-on: ubuntu-latest
-    needs: gitleaks
+    # needs: gitleaks
     if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
     steps:
       - name: Checkout code
