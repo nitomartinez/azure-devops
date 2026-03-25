@@ -141,6 +141,7 @@
               <apiPackage>com.example.ping.api</apiPackage>
               <modelPackage>com.example.ping.model</modelPackage>
               <configOptions>
+                <addGeneratedAnnotation>true</addGeneratedAnnotation>
                 <interfaceOnly>true</interfaceOnly>
                 <useSpringBoot3>true</useSpringBoot3>
               </configOptions>
