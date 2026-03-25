@@ -131,14 +131,11 @@ jobs:
       - name: Set up GraalVM
         uses: graalvm/setup-graalvm@v1
         with:
-          version: '22.3.2'
           java-version: '21'
-          components: 'native-image'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build native image
         run: mvn package -Pnative
         working-directory: code
       - name: Build Docker image
         run: docker build -t myorg/myimage:latest .
         working-directory: code
-
-
