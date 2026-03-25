@@ -111,6 +111,9 @@
                     <include>jacoco.exec</include>
                     <include>jacoco-it.exec</include>
                   </includes>
+                  <exclClassAnnotations>
+                    <exclClassAnnotation>**.Generated</exclClassAnnotation>
+                  </exclClassAnnotations>
                 </fileSet>
               </fileSets>
               <destFile>${project.build.directory}/jacoco-merged.exec</destFile>
