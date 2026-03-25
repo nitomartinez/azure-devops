@@ -118,15 +118,11 @@ jobs:
           name: jacoco-html-report
           path: code/target/site/jacoco/
 
-      - name: Generate JaCoCo coverage summary
-        uses: irongut/CodeCoverageSummary@v1.3.0
+      - name: Cobertura Coverage Summary
+        uses: 5monkeys/cobertura-action@v13
         with:
-          filename: code/target/site/jacoco/jacoco.xml
-          format: markdown
-          output: both
-
-      - name: Add coverage summary to job summary
-        run: cat code/target/site/jacoco/coverage-summary.md >> $GITHUB_STEP_SUMMARY
+          path: code/target/site/jacoco/jacoco.xml
+          minimum_coverage: 0
 
   native-and-docker:
     runs-on: ubuntu-latest
