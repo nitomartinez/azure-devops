@@ -128,6 +128,12 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
+      - name: Set up GraalVM
+        uses: graalvm/setup-graalvm@v1
+        with:
+          version: '22.3.2'
+          java-version: '21'
+          components: 'native-image'
       - name: Build native image
         run: mvn package -Pnative
         working-directory: code
