@@ -78,7 +78,7 @@ jobs:
         env:
           API_BASE_URL: http://host.docker.internal:8080
         run: |
-            docker run --rm \
+            docker run --rm --entrypoint= \
               -e API_BASE_URL="$API_BASE_URL" \
               -v "${{ github.workspace }}/code/karate-tests:/src" \
               -v "${{ github.workspace }}/code/karate-tests/target:/src/target" \
