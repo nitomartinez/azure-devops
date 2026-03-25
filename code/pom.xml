@@ -32,6 +32,10 @@
     <main-class>com.example.ping.App</main-class>
     <builder.image>paketobuildpacks/builder-jammy-base:latest</builder.image>
     <sl4j.version>2.0.12</sl4j.version>
+    <api.package>com.example.ping.api</api.package>
+    <api.package.path>com/example/ping/api/*</api.package.path>
+    <model.package>com.example.ping.model</model.package>
+    <model.package.path>com/example/ping/model/*</model.package.path>
   </properties>
 
   <dependencies>
@@ -70,11 +74,6 @@
     <plugins>
       <plugin>
         <groupId>org.springframework.boot</groupId>
-      <configuration>
-        <excludes>
-          <exclude>**/generated-sources/**</exclude>
-        </excludes>
-      </configuration>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <executions>
           <execution>
@@ -90,19 +89,15 @@
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.8.14</version>
+        <configuration>
+          <excludes>
+            <!-- <exclude>${api.package.replace('.', '/') + '/*'}</exclude>
+            <exclude>${model.package.replace('.', '/') + '/*'}</exclude> -->
+            <exclude>${api.package.path}</exclude> 
+            <exclude>${model.package.path}</exclude>
+            </excludes>
+        </configuration>
         <executions>
-          <execution>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>report</id>
-            <phase>test</phase>
-            <goals>
-              <goal>report</goal>
-            </goals>
-          </execution>
           <execution>
             <id>merge</id>
             <goals>
@@ -143,8 +138,8 @@
             <configuration>
               <inputSpec>${project.basedir}/src/main/resources/openapi.yaml</inputSpec>
               <generatorName>spring</generatorName>
-              <apiPackage>com.example.ping.api</apiPackage>
-              <modelPackage>com.example.ping.model</modelPackage>
+              <apiPackage>${api.package}</apiPackage>
+              <modelPackage>${model.package}</modelPackage>
               <configOptions>
                 <addGeneratedAnnotation>true</addGeneratedAnnotation>
                 <interfaceOnly>true</interfaceOnly>
