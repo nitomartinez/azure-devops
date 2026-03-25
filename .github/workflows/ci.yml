@@ -49,8 +49,19 @@ jobs:
         working-directory: code
       - name: Start Spring Boot with JaCoCo agent
         run: |
-          nohup mvn spring-boot:run -Dspring-boot.run.jvmArguments="-javaagent:${HOME}/.m2/repository/org/jacoco/org.jacoco.agent/0.8.14/org.jacoco.agent-0.8.14-runtime.jar=destfile=target/jacoco-it.exec" &
-          sleep 30
+          nohup mvn spring-boot:run -Dspring-boot.run.jvmArguments="-javaagent:${HOME}/.m2/repository/org/jacoco/org.jacoco.agent/0.8.14/org.jacoco.agent-0.8.14-runtime.jar=destfile=target/jacoco-it.exec" > spring.log 2>&1 &
+          for i in {1..60}; do
+            if grep -q 'Started App' spring.log; then
+              echo 'Spring Boot started.'
+              break
+            fi
+            sleep 1
+          done
+          if ! grep -q 'Started App' spring.log; then
+            echo 'Spring Boot did not start in time.'
+            cat spring.log
+            exit 1
+          fi
         working-directory: code
       - name: Run Karate tests
         env:
@@ -60,7 +71,7 @@ jobs:
             -e API_BASE_URL="$API_BASE_URL" \
             -v "${{ github.workspace }}/code/karate-tests:/src" \
             -v "${{ github.workspace }}/code/karate-tests/target:/src/target" \
-            karatelabs/karate \
+            karatelabs/karate-chrome \
             --threads=128 --format=json,cucumber:json,junit:xml --tags ~@wip --tags ~@ignore .
         working-directory: code/karate-tests
       - name: Stop Spring Boot
