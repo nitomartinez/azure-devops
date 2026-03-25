@@ -40,6 +40,8 @@ node_modules/
 *.swp
 *.swo
 *~
+*.bak
+*.tmp
 # Environment variables
 .env.local
 .act.event.json
