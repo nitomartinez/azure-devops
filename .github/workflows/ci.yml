@@ -47,17 +47,17 @@ jobs:
       - name: Maven test
         run: mvn test
         working-directory: code
-        - name: Upload Maven JUnit reports
-          uses: actions/upload-artifact@v4
-          with:
-            name: maven-junit-reports
-            path: code/target/surefire-reports/*.xml
-        - name: Publish Maven JUnit results
-          uses: dorny/test-reporter@v1
-          with:
-            name: Maven Tests
-            path: code/target/surefire-reports/*.xml
-            reporter: java-junit
+      - name: Upload Maven JUnit reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: maven-junit-reports
+          path: code/target/surefire-reports/*.xml
+      - name: Publish Maven JUnit results
+        uses: dorny/test-reporter@v1
+        with:
+          name: Maven Tests
+          path: code/target/surefire-reports/*.xml
+          reporter: java-junit
       - name: Start Spring Boot with JaCoCo agent
         run: |
           nohup mvn spring-boot:run -Dspring-boot.run.jvmArguments="-javaagent:${HOME}/.m2/repository/org/jacoco/org.jacoco.agent/0.8.14/org.jacoco.agent-0.8.14-runtime.jar=destfile=target/jacoco-it.exec" > spring.log 2>&1 &
@@ -74,16 +74,15 @@ jobs:
             exit 1
           fi
         working-directory: code
+      - name: Download Karate jar
+        run: |
+          curl -sSL -o karate.jar https://github.com/karatelabs/karate/releases/download/v1.5.2/karate-1.5.2.jar
+        working-directory: code/karate-tests
       - name: Run Karate tests
         env:
-          API_BASE_URL: http://host.docker.internal:8080
+          API_BASE_URL: http://localhost:8080
         run: |
-            docker run --rm --entrypoint= \
-              -e API_BASE_URL="$API_BASE_URL" \
-              -v "${{ github.workspace }}/code/karate-tests:/src" \
-              -v "${{ github.workspace }}/code/karate-tests/target:/src/target" \
-              karatelabs/karate-chrome \
-              java -jar karate.jar --threads=128 --format=json,cucumber:json,junit:xml --tags ~@wip --tags ~@ignore .
+          java -jar karate.jar --threads=128 --format=json,cucumber:json,junit:xml --tags ~@wip --tags ~@ignore .
         working-directory: code/karate-tests
       - name: Upload Karate JUnit reports
         uses: actions/upload-artifact@v4
