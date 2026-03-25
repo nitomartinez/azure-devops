@@ -137,5 +137,5 @@ jobs:
         run: mvn package -Pnative
         working-directory: code
       - name: Build Docker image
-        run: docker build -t myorg/myimage:latest .
+        run: docker build -t qindel/azure-course:latest .
         working-directory: code
