@@ -9,6 +9,11 @@ on:
     branches:
       - main
 
+permissions:
+  checks: write
+  pull-requests: write
+  contents: read
+
 jobs:
   terraform:
     runs-on: ubuntu-latest
