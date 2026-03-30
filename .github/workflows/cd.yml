@@ -136,6 +136,22 @@ jobs:
           path: code/karate-tests/target/karate-reports/*.xml
           reporter: java-junit
 
+
+  teardown:
+    runs-on: ubuntu-latest
+    needs: terraform
+    if: always()
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Azure Login
+        uses: azure/login@v3
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.14.8
       - name: Terraform Destroy (Teardown)
         env:
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
