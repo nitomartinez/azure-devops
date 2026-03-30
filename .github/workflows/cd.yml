@@ -142,4 +142,3 @@ jobs:
           ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
         run: terraform destroy -auto-approve
         working-directory: terraform
- 
