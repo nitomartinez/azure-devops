@@ -129,6 +129,11 @@ jobs:
           curl -sSL -o karate.jar https://github.com/karatelabs/karate/releases/download/v1.5.2/karate-1.5.2.jar
           java -jar karate.jar --threads=8 --format=json,cucumber:json,junit:xml --tags ~@wip --tags ~@ignore .
 
+      - name: Upload Karate JUnit reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: karate-junit-reports
+          path: code/karate-tests/target/karate-reports/*.xml
       - name: Publish Karate JUnit results
         uses: dorny/test-reporter@v1
         with:
