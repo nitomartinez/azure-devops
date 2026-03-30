@@ -65,6 +65,8 @@ jobs:
     needs: terraform
     # if: github.ref == 'refs/heads/main'
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Get ACR Outputs and Function App URL
         id: tfoutputs_acr
         env:
@@ -78,9 +80,6 @@ jobs:
           echo "acr_admin_password=$(terraform output -raw acr_admin_password)" >> $GITHUB_ENV
           echo "function_app_url=$(terraform output -raw function_app_url)" >> $GITHUB_ENV
         working-directory: terraform
-
-      - name: Checkout code
-        uses: actions/checkout@v4
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
