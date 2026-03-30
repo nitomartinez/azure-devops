@@ -8,4 +8,4 @@ Feature: Ping API
     Given path '/api/v1/ping'
     When method get
     Then status 200
-    And match response == { status: 'ok', description: 'Ping Service 2' }
+    And match response == { status: 'ok', description: 'Ping Service' }
