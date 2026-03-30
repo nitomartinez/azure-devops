@@ -83,6 +83,7 @@ jobs:
           echo "acr_admin_password=$(terraform output -raw acr_admin_password)" >> $GITHUB_ENV
           echo "function_app_url=$(terraform output -raw function_app_url)" >> $GITHUB_ENV
         working-directory: terraform
+
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Set up JDK 21
