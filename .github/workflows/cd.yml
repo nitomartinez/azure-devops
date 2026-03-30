@@ -66,19 +66,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Get ACR Outputs and Function App URL
-        id: tfoutputs_acr
-        env:
-          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-        run: |
-          echo "acr_login_server=$(terraform output -raw acr_login_server)" >> $GITHUB_ENV
-          echo "acr_admin_username=$(terraform output -raw acr_admin_username)" >> $GITHUB_ENV
-          echo "acr_admin_password=$(terraform output -raw acr_admin_password)" >> $GITHUB_ENV
-          echo "function_app_url=$(terraform output -raw function_app_url)" >> $GITHUB_ENV
-        working-directory: terraform
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
@@ -103,12 +90,30 @@ jobs:
         run: docker build -t qindel/azure-course:latest .
         working-directory: code
 
-      - name: Build Docker Image
-        if: ${{ github.event_name == 'workflow_dispatch' }}
+      - name: Get ACR Outputs and Function App URL
+        id: tfoutputs_acr
+        env:
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
         run: |
-          cd code
-          docker build -t qindel/azure-course:latest .
-
+          export acr_login_server=$(terraform output -raw acr_login_server)
+          export acr_admin_username=$(terraform output -raw acr_admin_username)
+          export acr_admin_password=$(terraform output -raw acr_admin_password)
+          export function_app_url=$(terraform output -raw function_app_url)
+          echo function_app_url=${function_app_url} >> $GITHUB_ENV
+          echo "ACR Login Server: $acr_login_server"
+          echo "ACR Admin Username: $acr_admin_username"
+          # Do not print the ACR Admin Password for security reasons
+          # echo "ACR Admin Password: $acr_admin_password"
+          echo "acr_login_server=${acr_login_server}" >> $GITHUB_ENV
+          echo "acr_admin_username=${acr_admin_username}" >> $GITHUB_ENV
+          echo "acr_admin_password=${acr_admin_password}" >> $GITHUB_ENV
+          echo "function_app_url=${function_app_url}" >> $GITHUB_ENV
+          chmod +x push_image.sh
+          ./push_image.sh "$acr_login_server" "$acr_admin_username" "$acr_admin_password" "qindel/azure-course:latest"
+        working-directory: terraform
       - name: Docker Login & Push Image
         run: |
           chmod +x terraform/push_image.sh
