@@ -105,6 +105,8 @@ jobs:
           echo "function_app_url=${function_app_url}" >> $GITHUB_ENV
           chmod +x push_image.sh
           ./push_image.sh "$acr_login_server" "$acr_admin_username" "$acr_admin_password" "qindel/azure-course:latest"
+        working-directory: terraform
+
       - name: Azure Login
         uses: azure/login@v2
         with:
