@@ -3,7 +3,11 @@ name: CI Pipeline
 
 on:
   push:
+    paths:
+      - 'code/**'
   pull_request:
+    paths:
+      - 'code/**'
 
 permissions:
   checks: write
