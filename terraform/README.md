@@ -7,14 +7,22 @@
 - `ARM_CLIENT_SECRET`
 - `ARM_SUBSCRIPTION_ID`
 - `ARM_TENANT_ID`
-- `resource_group_name`
-- `location`
-- `registry_name`
-- `storage_account_name`
-- `service_plan_name`
-- `function_app_name`
-- `docker_image_name` (e.g., `qindel/azure-course:latest`)
-- `common_tags` (map, e.g., `{ owner = "353827+nitomartinez@users.noreply.github.com" }`)
+- `AZURE_CREDENTIALS` with an entry like
+```json
+{
+  "clientId": "clientid",
+  "clientSecret": "YOUR_CLIENT_SECRET",
+  "subscriptionId": "subscription",
+  "tenantId": "tenantid",
+  "activeDirectoryEndpointUrl": "https://login.microsoftonline.com",
+  "resourceManagerEndpointUrl": "https://management.azure.com/",
+  "activeDirectoryGraphResourceId": "https://graph.windows.net/",
+  "sqlManagementEndpointUrl": "https://management.core.windows.net:8443/",
+  "galleryEndpointUrl": "https://gallery.azure.com/",
+  "managementEndpointUrl": "https://management.core.windows.net/"
+}
+```
+
 
 ## Steps
 
