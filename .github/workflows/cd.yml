@@ -124,6 +124,13 @@ jobs:
           curl -sSL -o karate.jar https://github.com/karatelabs/karate/releases/download/v1.5.2/karate-1.5.2.jar
           java -jar karate.jar --threads=8 --format=json,cucumber:json,junit:xml --tags ~@wip --tags ~@ignore .
 
+      - name: Publish Karate JUnit results
+        uses: dorny/test-reporter@v1
+        with:
+          name: Karate Tests
+          path: code/karate-tests/target/karate-reports/*.xml
+          reporter: java-junit
+
       - name: Terraform Destroy (Teardown)
         env:
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
