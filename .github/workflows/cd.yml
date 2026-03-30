@@ -114,10 +114,6 @@ jobs:
           chmod +x push_image.sh
           ./push_image.sh "$acr_login_server" "$acr_admin_username" "$acr_admin_password" "qindel/azure-course:latest"
         working-directory: terraform
-      - name: Docker Login & Push Image
-        run: |
-          chmod +x terraform/push_image.sh
-          ./terraform/push_image.sh "$acr_login_server" "$acr_admin_username" "$acr_admin_password" "qindel/azure-course:latest"
 
       - name: Run Karate Tests against Azure Function
         env:
