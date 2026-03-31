@@ -68,11 +68,11 @@ jobs:
         run: terraform apply -auto-approve
         working-directory: terraform
 
-      - name: Set up JDK 21
+      - name: Set up JDK 25
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '21'
+          java-version: '25'
       - name: Cache Maven packages
         uses: actions/cache@v4
         with:
@@ -83,7 +83,7 @@ jobs:
       - name: Set up GraalVM
         uses: graalvm/setup-graalvm@v1
         with:
-          java-version: '21'
+          java-version: '25'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build native image
         run: mvn package -Pnative
